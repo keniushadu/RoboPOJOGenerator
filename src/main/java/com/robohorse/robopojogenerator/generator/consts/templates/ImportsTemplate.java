@@ -23,6 +23,10 @@ public interface ImportsTemplate {
     String TYPED_ADAPTER = "import com.google.gson.TypeAdapter;";
     String GSON_IMPORT = "import com.google.gson.Gson;";
 
+    String GETTER = "import lombok.Getter;";
+    String SETTER = "import lombok.Setter;";
+    String TO_STRING = "import lombok.ToString;";
+
     interface GSON {
         String[] IMPORTS = {GENERATED, SERIALIZED_NAME};
     }

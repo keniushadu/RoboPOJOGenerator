@@ -28,6 +28,7 @@ public class GeneratorVew {
     private JCheckBox useStringCheckBox;
     private JRadioButton fastJSONRadioButton;
     private JRadioButton Moshi;
+    private JCheckBox lombokCheckBox;
     private ButtonGroup languageGroup;
     private ButtonGroup typeButtonGroup;
 
@@ -41,6 +42,10 @@ public class GeneratorVew {
 
     public JCheckBox getUseGettersCheckBox() {
         return useGettersCheckBox;
+    }
+
+    public JCheckBox getLombokCheckBox() {
+        return lombokCheckBox;
     }
 
     public JPanel getRootView() {
@@ -86,6 +91,7 @@ public class GeneratorVew {
     public JCheckBox getUseStringCheckBox() {
         return useStringCheckBox;
     }
+
 
     private void createUIComponents() {
         textArea = new RSyntaxTextArea();

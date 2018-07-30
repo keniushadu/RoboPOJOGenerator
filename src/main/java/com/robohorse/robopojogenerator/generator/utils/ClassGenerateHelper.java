@@ -1,6 +1,7 @@
 package com.robohorse.robopojogenerator.generator.utils;
 
 import com.google.common.base.CaseFormat;
+import com.google.common.collect.Sets;
 import com.robohorse.robopojogenerator.errors.RoboPluginException;
 import com.robohorse.robopojogenerator.errors.custom.JSONStructureException;
 import com.robohorse.robopojogenerator.errors.custom.WrongClassNameException;
@@ -91,12 +92,16 @@ public class ClassGenerateHelper {
 
     public void setAnnotations(ClassItem classItem, String classAnnotation,
                                String annotation, String[] imports) {
-        classItem.setClassAnnotation(classAnnotation);
+        classItem.setClassAnnotations(Sets.newHashSet(classAnnotation));
         classItem.setAnnotation(annotation);
 
         for (String value : imports) {
             classItem.addClassImport(value);
         }
+    }
+
+    public void addClassAnnotation(ClassItem classItem, String classAnnotation){
+        classItem.addClassAnnotation(classAnnotation);
     }
 
     public void updateClassModel(StringBuilder classBodyBuilder) {

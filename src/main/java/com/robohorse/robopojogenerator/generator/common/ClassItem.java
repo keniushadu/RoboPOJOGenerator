@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public class ClassItem {
     private String annotation;
-    private String classAnnotation;
+    private Set<String> classAnnotations = new HashSet<String>();
     private String className;
     private String packagePath;
     private Map<String, ClassField> classFields = new LinkedHashMap<String, ClassField>();
@@ -44,8 +44,12 @@ public class ClassItem {
         return classFields;
     }
 
-    public void setClassAnnotation(String classAnnotation) {
-        this.classAnnotation = classAnnotation;
+    public void setClassAnnotations(Set<String> classAnnotations) {
+        this.classAnnotations = classAnnotations;
+    }
+
+    public void addClassAnnotation(String classAnnotation){
+        this.classAnnotations.add(classAnnotation);
     }
 
     public Set<String> getClassImports() {
@@ -56,8 +60,8 @@ public class ClassItem {
         return annotation;
     }
 
-    public String getClassAnnotation() {
-        return classAnnotation;
+    public Set<String> getClassAnnotations() {
+        return classAnnotations;
     }
 
     public String getPackagePath() {

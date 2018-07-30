@@ -15,6 +15,8 @@ public class GenerationModel {
     private boolean useGetters;
     private boolean useStrings;
 
+    private boolean useLombok;
+
     public boolean isRewriteClasses() {
         return rewriteClasses;
     }
@@ -45,6 +47,14 @@ public class GenerationModel {
 
     public boolean isUseStrings() {
         return useStrings;
+    }
+
+    public boolean isUseLombok() {
+        return useLombok;
+    }
+
+    public void setUseLombok(boolean useLombok) {
+        this.useLombok = useLombok;
     }
 
     public static class Builder {
@@ -91,7 +101,10 @@ public class GenerationModel {
             instance.content = content;
             return this;
         }
-
+        public Builder setUseLombok(boolean available){
+            instance.useLombok = available;
+            return this;
+        }
         public GenerationModel build() {
             return instance;
         }

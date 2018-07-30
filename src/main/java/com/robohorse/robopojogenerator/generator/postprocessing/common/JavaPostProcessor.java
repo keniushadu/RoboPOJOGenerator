@@ -11,6 +11,7 @@ import com.robohorse.robopojogenerator.generator.consts.annotations.PojoAnnotati
  */
 public abstract class JavaPostProcessor extends BasePostProcessor {
 
+    @Override
     protected void applyAnnotations(AnnotationEnum item, ClassItem classItem) {
         switch (item) {
             case GSON: {

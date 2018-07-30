@@ -1,8 +1,10 @@
 package com.robohorse.robopojogenerator.generator.postprocessing.common;
 
 import com.robohorse.robopojogenerator.generator.common.ClassField;
-import com.robohorse.robopojogenerator.generator.consts.templates.ClassTemplate;
 import com.robohorse.robopojogenerator.generator.common.ClassItem;
+import com.robohorse.robopojogenerator.generator.consts.annotations.LombokAnnotations;
+import com.robohorse.robopojogenerator.generator.consts.templates.ClassTemplate;
+import com.robohorse.robopojogenerator.generator.consts.templates.ImportsTemplate;
 import com.robohorse.robopojogenerator.models.FieldModel;
 import com.robohorse.robopojogenerator.models.GenerationModel;
 
@@ -21,6 +23,7 @@ public class CommonJavaPostProcessor extends JavaPostProcessor {
     public String proceedClassBody(ClassItem classItem, GenerationModel generationModel) {
         final StringBuilder classBodyBuilder = new StringBuilder();
         final StringBuilder classMethodBuilder = new StringBuilder();
+
         final Map<String, ClassField> classFields = classItem.getClassFields();
 
         for (String objectName : classFields.keySet()) {
@@ -36,24 +39,40 @@ public class CommonJavaPostProcessor extends JavaPostProcessor {
                             .build()
             ));
             if (generationModel.isUseSetters()) {
-                classMethodBuilder.append(ClassTemplate.NEW_LINE);
-                classMethodBuilder.append(classTemplateHelper.createSetter(
-                        itemNameFormatted,
-                        classItemValue));
+                if (!generationModel.isUseLombok()) {
+                    classMethodBuilder.append(ClassTemplate.NEW_LINE);
+                    classMethodBuilder.append(classTemplateHelper.createSetter(
+                            itemNameFormatted,
+                            classItemValue));
 
+                } else {
+                    classItem.addClassImport(ImportsTemplate.SETTER);
+                    generateHelper.addClassAnnotation(classItem, LombokAnnotations.AT_SETTER);
+                }
             }
             if (generationModel.isUseGetters()) {
-                classMethodBuilder.append(ClassTemplate.NEW_LINE);
-                classMethodBuilder.append(classTemplateHelper.createGetter(
-                        itemNameFormatted,
-                        classItemValue));
+                if (!generationModel.isUseLombok()) {
+                    classMethodBuilder.append(ClassTemplate.NEW_LINE);
+                    classMethodBuilder.append(classTemplateHelper.createGetter(
+                            itemNameFormatted,
+                            classItemValue));
+                } else {
+                    classItem.addClassImport(ImportsTemplate.GETTER);
+                    generateHelper.addClassAnnotation(classItem, LombokAnnotations.AT_GETTER);
+                }
             }
         }
         if (generationModel.isUseStrings()) {
-            classMethodBuilder.append(ClassTemplate.NEW_LINE);
-            classMethodBuilder.append(classTemplateHelper.createToString(
-                    classItem
-            ));
+            if (!generationModel.isUseLombok()) {
+                classMethodBuilder.append(ClassTemplate.NEW_LINE);
+                classMethodBuilder.append(classTemplateHelper.createToString(
+                        classItem
+                ));
+
+            } else {
+                classItem.addClassImport(ImportsTemplate.TO_STRING);
+                generateHelper.addClassAnnotation(classItem, LombokAnnotations.AT_TOSTRING);
+            }
         }
         classBodyBuilder.append(classMethodBuilder);
         return classBodyBuilder.toString();

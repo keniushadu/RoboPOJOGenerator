@@ -131,10 +131,14 @@ public class ClassTemplateHelper {
     }
 
     private String createClassBodyAnnotated(ClassItem classItem, String classItemBody) {
-        final String classAnnotation = classItem.getClassAnnotation();
+        StringBuilder annos = new StringBuilder();
+        final Set<String> classAnnotation = classItem.getClassAnnotations();
         if (null != classAnnotation && !classAnnotation.isEmpty()) {
+            for (String classAnno : classAnnotation) {
+                annos.append("\n").append(classAnno);
+            }
             return String.format(ClassTemplate.CLASS_BODY_ANNOTATED,
-                    classAnnotation,
+                    annos.toString(),
                     classItemBody);
         } else {
             return classItemBody;
